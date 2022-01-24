@@ -1,6 +1,7 @@
 #include <cstdio>
 
 #include <Program.hpp>
+#include <iostream>
 
 //we should have something to manager inputs from the manager
 //something to manage our outputs
@@ -9,5 +10,7 @@
 //game class serves as wrapper for AI class and board class
 
 int main() {
-    Program program();
+    Program program;
+
+    program.startInputLoop();
 }

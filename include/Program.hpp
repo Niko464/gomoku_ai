@@ -22,8 +22,10 @@ public:
 
 private:
     bool _shouldGetInput;
-    std::thread _inputThread;
+    //std::thread _inputThread;
     Game _game;
+
+    void parseEntry(std::string &name);
 };
 
 #endif /* !PROGRAM_HPP_ */
