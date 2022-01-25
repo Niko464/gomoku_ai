@@ -26,6 +26,16 @@ private:
     Game _game;
 
     void parseEntry(std::string &name);
+    void startCmd(std::vector<std::string> &params);
+    void turnCmd(std::vector<std::string> &params);
+    void beginCmd(std::vector<std::string> &params);
+    void boardCmd(std::vector<std::string> &params);
+    void infoCmd(std::vector<std::string> &params);
+    void endCmd(std::vector<std::string> &params);
+    void aboutCmd(std::vector<std::string> &params);
 };
+
+typedef void (Program::*ProgramPtrFn)(std::vector<std::string> &);
+#define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))
 
 #endif /* !PROGRAM_HPP_ */

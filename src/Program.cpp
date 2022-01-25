@@ -9,6 +9,7 @@
 #include "Utils.hpp"
 #include <iostream>
 #include <string>
+#include <functional>
 
 Program::Program()
 {
@@ -33,9 +34,32 @@ void Program::startInputLoop()
 
 void Program::parseEntry(std::string &entry)
 {
-    std::vector<std::string> splitted = Utils::splitStr(entry);
+    std::vector<std::pair<const char *, ProgramPtrFn>> fnPtrs = {
+        std::pair<const char *, ProgramPtrFn>("START", &Program::startCmd),
+        std::pair<const char *, ProgramPtrFn>("TURN", &Program::turnCmd),
+        std::pair<const char *, ProgramPtrFn>("BEGIN", &Program::beginCmd),
+        std::pair<const char *, ProgramPtrFn>("BOARD", &Program::boardCmd),
+        std::pair<const char *, ProgramPtrFn>("INFO", &Program::infoCmd),
+        std::pair<const char *, ProgramPtrFn>("END", &Program::endCmd),
+        std::pair<const char *, ProgramPtrFn>("ABOUT", &Program::aboutCmd)
+    };
+    std::vector<std::string> splitted = Utils::splitStr(entry, " ");
 
-    for (int i = 0; i < splitted.size(); i++)
-        std::cout << "AAA " << splitted[i] << std::endl;
+    if (splitted.size() == 0)
+        return;
+    for (int amtCmds = 0; amtCmds < fnPtrs.size(); amtCmds++) {
+        if (splitted.at(0).compare(fnPtrs.at(amtCmds).first) == 0) {
+            CALL_MEMBER_FN(*this, fnPtrs.at(amtCmds).second)(splitted);
+            break;
+        }
+    }
     std::cout << "finished parsing lol" << std::endl;
 }
+
+void Program::startCmd(std::vector<std::string> &parmas) {}
+void Program::turnCmd(std::vector<std::string> &parmas) {}
+void Program::beginCmd(std::vector<std::string> &parmas) {}
+void Program::boardCmd(std::vector<std::string> &parmas) {}
+void Program::infoCmd(std::vector<std::string> &parmas) {}
+void Program::endCmd(std::vector<std::string> &parmas) {}
+void Program::aboutCmd(std::vector<std::string> &parmas) {}

@@ -12,7 +12,7 @@
 #include <string>
 
 namespace Utils {
-    std::vector<std::string> splitStr(std::string str, std::string delimiter = "");
+    std::vector<std::string> splitStr(const std::string &s, const std::string &del);
 }
 
 #endif
