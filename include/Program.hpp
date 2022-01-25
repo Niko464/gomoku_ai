@@ -25,11 +25,13 @@ private:
     //std::thread _inputThread;
     Game _game;
 
+    bool _isWaitingForBoardParams;
     void parseEntry(std::string &name);
     void startCmd(std::vector<std::string> &params);
     void turnCmd(std::vector<std::string> &params);
     void beginCmd(std::vector<std::string> &params);
     void boardCmd(std::vector<std::string> &params);
+    void boardCmdArg(std::vector<std::string> &params);
     void infoCmd(std::vector<std::string> &params);
     void endCmd(std::vector<std::string> &params);
     void aboutCmd(std::vector<std::string> &params);

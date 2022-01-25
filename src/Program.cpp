@@ -14,6 +14,7 @@
 Program::Program()
 {
     this->_shouldGetInput = true;
+    this->_isWaitingForBoardParams = false;
     //this->_inputThread = std::thread(&Program::startInputLoop, this);
 }
 
@@ -44,22 +45,37 @@ void Program::parseEntry(std::string &entry)
         std::pair<const char *, ProgramPtrFn>("ABOUT", &Program::aboutCmd)
     };
     std::vector<std::string> splitted = Utils::splitStr(entry, " ");
+    bool foundCmd = false;
 
     if (splitted.size() == 0)
         return;
     for (int amtCmds = 0; amtCmds < fnPtrs.size(); amtCmds++) {
         if (splitted.at(0).compare(fnPtrs.at(amtCmds).first) == 0) {
+            foundCmd = true;
             CALL_MEMBER_FN(*this, fnPtrs.at(amtCmds).second)(splitted);
             break;
         }
     }
+    if (this->_isWaitingForBoardParams && foundCmd == false)
+        boardCmdArg(splitted);
     std::cout << "finished parsing lol" << std::endl;
 }
 
-void Program::startCmd(std::vector<std::string> &parmas) {}
-void Program::turnCmd(std::vector<std::string> &parmas) {}
-void Program::beginCmd(std::vector<std::string> &parmas) {}
-void Program::boardCmd(std::vector<std::string> &parmas) {}
-void Program::infoCmd(std::vector<std::string> &parmas) {}
-void Program::endCmd(std::vector<std::string> &parmas) {}
-void Program::aboutCmd(std::vector<std::string> &parmas) {}
+void Program::startCmd(std::vector<std::string> &params) {}
+void Program::turnCmd(std::vector<std::string> &params) {}
+void Program::beginCmd(std::vector<std::string> &params) {}
+void Program::boardCmd(std::vector<std::string> &params)
+{
+    this->_isWaitingForBoardParams = true;
+}
+void Program::boardCmdArg(std::vector<std::string> &params)
+{
+    if (params.at(0).compare("END") == 0) {
+        this->_isWaitingForBoardParams = false;
+        return;
+    }
+    
+}
+void Program::infoCmd(std::vector<std::string> &params) {}
+void Program::endCmd(std::vector<std::string> &params) {}
+void Program::aboutCmd(std::vector<std::string> &params) {}
