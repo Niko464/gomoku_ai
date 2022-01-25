@@ -9,20 +9,22 @@
 #define BOARD_HPP_
 
 #include <vector>
+#include "BitBoard.hpp"
+#include "PlayerTypes.hpp"
 
 class Board {
 public:
-    Board(int size);
+    Board();
     ~Board();
 
-    //use makeMove(y, x, 0) to unmakemove
-    void makeMove(int y, int x, int playerType);
-    std::vector<std::vector<int>> &getBoard();
+    void makeMove(int y, int x, player_types playerType);
+    void unmakeMove(int y, int x, player_types playerType);
+    void reset();
+    std::vector<std::bitset<20>> &getPlayerBoard(int playerType);
 
     void printToOutput();
 private:
-    int _size;
-    std::vector<std::vector<int>> _board;
+    BitBoard bitboards[2];
 };
 
 #endif /* !BOARD_HPP_ */

@@ -10,9 +10,11 @@
 
 #include <vector>
 #include <string>
+#include "PlayerTypes.hpp"
 
 namespace Utils {
     std::vector<std::string> splitStr(const std::string &s, const std::string &del);
+    char getPlayerChar(player_types type);
 }
 
 #endif

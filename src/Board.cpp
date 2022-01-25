@@ -6,29 +6,48 @@
 */
 
 #include "Board.hpp"
+#include "Utils.hpp"
 #include <iostream>
 
-Board::Board(int size) :
-    _size(size)
-{
-    this->_board.reserve(size);
-    for (int y = 0; y < size; y++) {
-        std::vector<int> newRow;
-        newRow.reserve(size);
-        for (int x = 0; x < size; x++)
-            newRow.push_back(0);
-        this->_board.push_back(newRow);
-    }
-}
+Board::Board() {}
 
 Board::~Board() {}
 
 void Board::printToOutput()
 {
-    for (int y = 0; y < this->_size; y++) {
-        for (int x = 0; x < this->_size; x++)
-            std::cout << this->_board[y][x] << " ";
+    std::cout << "AI Bitboard" << std::endl;
+    this->bitboards[0].printToOutput();
+    std::cout << "Player Bitboard" << std::endl;
+    this->bitboards[1].printToOutput();
+
+    std::cout << "Final Board" << std::endl;
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 20; x++) {
+            int entityType = -1;
+            for (int bitboardIndex = 0; bitboardIndex < 2; bitboardIndex++) {
+                if (this->bitboards[bitboardIndex].get_bit(y, x)) {
+                    entityType = bitboardIndex;
+                    break;
+                }
+            }
+            std::cout << " " << (entityType != -1 ? Utils::getPlayerChar(static_cast<player_types>(entityType)) : '.');
+        }
         std::cout << "\n";
     }
 }
 
+void Board::makeMove(int y, int x, player_types type)
+{
+    this->bitboards[type].set_bit(y, x);
+}
+
+void Board::unmakeMove(int y, int x, player_types type)
+{
+    this->bitboards[type].unset_bit(y, x);
+}
+
+void Board::reset()
+{
+    this->bitboards[0].reset();
+    this->bitboards[1].reset();
+}

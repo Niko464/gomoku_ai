@@ -12,7 +12,7 @@
 
 class Game {
 public:
-    Game(int boardSize = 20);
+    Game();
     ~Game();
 
 private:
