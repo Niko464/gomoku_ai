@@ -7,13 +7,32 @@
 
 #include "Game.hpp"
 
-Game::Game() {
-    this->_board.makeMove(0, 0, player_types::AI);
-    this->_board.makeMove(3, 2, player_types::PLAYER);
-    this->_board.makeMove(5, 3, player_types::PLAYER);
-    this->_board.unmakeMove(3, 2, player_types::PLAYER);
-    this->_board.reset();
-    this->_board.printToOutput();
+Game::Game()
+{
+    this->_timeout = 5000;
 }
 
 Game::~Game() {}
+
+void Game::reset()
+{
+    this->_board.reset();
+}
+
+bool Game::makeMove(player_types playerType, int y, int x)
+{
+    if (!this->_board.canMakeMove(y, x))
+        return false;
+    this->_board.makeMove(y, x, playerType);
+    return true;
+}
+
+void Game::aiStartThinking()
+{
+    this->_ai.startThinking(this->_board, this->_timeout);
+}
+
+void Game::setTimeOut(int timeoutMs)
+{
+    this->_timeout = timeoutMs;
+}

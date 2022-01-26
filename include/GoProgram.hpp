@@ -2,21 +2,21 @@
 ** EPITECH PROJECT, 2022
 ** B-AIA-500-TLS-5-1-gomoku-kevin.gouyet
 ** File description:
-** Program
+** GoProgram
 */
 
-#ifndef PROGRAM_HPP_
-#define PROGRAM_HPP_
+#ifndef GoProgram_HPP_
+#define GoProgram_HPP_
 
 #include <thread>
 #include "Game.hpp"
 
 //this should contain threads if necessary for input && calculations
 
-class Program {
+class GoProgram {
 public:
-    Program();
-    ~Program();
+    GoProgram();
+    ~GoProgram();
 
     void startInputLoop();
 
@@ -37,7 +37,7 @@ private:
     void aboutCmd(std::vector<std::string> &params);
 };
 
-typedef void (Program::*ProgramPtrFn)(std::vector<std::string> &);
+typedef void (GoProgram::*GoProgramPtrFn)(std::vector<std::string> &);
 #define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))
 
-#endif /* !PROGRAM_HPP_ */
+#endif /* !GoProgram_HPP_ */

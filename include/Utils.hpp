@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** B-AIA-500-TLS-5-1-gomoku-kevin.gouyet
 ** File description:
-** Program
+** GoProgram
 */
 
 #ifndef UTILS_HPP_
@@ -15,6 +15,7 @@
 namespace Utils {
     std::vector<std::string> splitStr(const std::string &s, const std::string &del);
     char getPlayerChar(player_types type);
+    bool isInt(const std::string &str);
 }
 
 #endif

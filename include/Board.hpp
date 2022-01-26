@@ -17,10 +17,11 @@ public:
     Board();
     ~Board();
 
+    bool canMakeMove(int y, int x);
     void makeMove(int y, int x, player_types playerType);
     void unmakeMove(int y, int x, player_types playerType);
     void reset();
-    std::vector<std::bitset<20>> &getPlayerBoard(int playerType);
+    std::vector<std::bitset<20>> &getPlayerBoard(player_types playerType);
 
     void printToOutput();
 private:

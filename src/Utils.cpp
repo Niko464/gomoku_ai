@@ -34,3 +34,12 @@ char Utils::getPlayerChar(player_types type)
         return 'O';
     return 'X';
 }
+
+bool Utils::isInt(const std::string &str)
+{
+    for (int i = 0; i < str.length(); i++) {
+        if (!std::isdigit(str[i]) && !(i == 0 && str[i] == '-'))
+            return false;
+    }
+    return true;
+}

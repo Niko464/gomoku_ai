@@ -47,3 +47,8 @@ void BitBoard::reset()
     for (int y = 0; y < 20; y++)
         this->_bitboard[y].reset();
 }
+
+std::vector<std::bitset<20>> &BitBoard::getBitboard()
+{
+    return this->_bitboard;
+}

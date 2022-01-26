@@ -22,7 +22,7 @@ public:
     bool get_bit(int y, int x);
     void reset();
 
-    std::vector<std::bitset<20>> &getBITBOARD();
+    std::vector<std::bitset<20>> &getBitboard();
 
     void printToOutput();
 private:

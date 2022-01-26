@@ -9,14 +9,22 @@
 #define GAME_HPP_
 
 #include "Board.hpp"
+#include "GoAI.hpp"
 
 class Game {
 public:
     Game();
     ~Game();
 
+    void reset();
+    bool makeMove(player_types playerType, int y, int x);
+    void aiStartThinking();
+    void setTimeOut(int timeoutMs);
+
 private:
     Board _board;
+    GoAI _ai;
+    int _timeout;
 };
 
 #endif /* !GAME_HPP_ */

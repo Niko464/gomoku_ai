@@ -36,6 +36,11 @@ void Board::printToOutput()
     }
 }
 
+bool Board::canMakeMove(int y, int x)
+{
+    return !(this->bitboards[0].get_bit(y, x) || this->bitboards[1].get_bit(y, x));
+}
+
 void Board::makeMove(int y, int x, player_types type)
 {
     this->bitboards[type].set_bit(y, x);
@@ -50,4 +55,9 @@ void Board::reset()
 {
     this->bitboards[0].reset();
     this->bitboards[1].reset();
+}
+
+std::vector<std::bitset<20>> &Board::getPlayerBoard(player_types playerType)
+{
+    return this->bitboards[playerType].getBitboard();
 }
