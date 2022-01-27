@@ -80,7 +80,7 @@ void GoProgram::startCmd(std::vector<std::string> &params)
         return;
     }
     this->_game.reset();
-    std::cout << "OK - everthing is good" << std::endl;
+    std::cout << "OK" << std::endl;
 }
 
 void GoProgram::turnCmd(std::vector<std::string> &params)
