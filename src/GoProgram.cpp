@@ -80,7 +80,7 @@ void GoProgram::startCmd(std::vector<std::string> &params)
         return;
     }
     this->_game.reset();
-    std::cout << "OK - everthing is good" << std::endl;
+    std::cout << "OK" << std::endl;
 }
 
 void GoProgram::turnCmd(std::vector<std::string> &params)
@@ -90,7 +90,6 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
         return;
     }
     std::vector<std::string> splitted = Utils::splitStr(params[1], ",");
-    //TODO: this implies that the manager sends TURN x,y
     if (!Utils::isInt(splitted[0]) || !Utils::isInt(splitted[1])) {
         std::cout << "ERROR message - those aren't ints as params" << std::endl;
         return;
