@@ -12,16 +12,16 @@ BINARY_NAME = pbrain-gomoku-ai
 all: cmake
 
 cmake:
-        mkdir -p build && cd ./build && cmake .. && ((make && mv pbrain-gomoku-ai ..) || echo 'Windows system detected')
+	mkdir build && cd ./build && cmake .. && ((make && mv pbrain-gomoku-ai ..) || echo 'Windows system detected')
 
 tests_run:
-        @echo 'No tests specified'
+	@echo 'No tests specified'
 
 clean:
-        rm -rf build
+	rm -rf build
 
 fclean: clean
-        rm -f $(BINARY_NAME)
+	rm -f $(BINARY_NAME)
 
 re: fclean all
 
