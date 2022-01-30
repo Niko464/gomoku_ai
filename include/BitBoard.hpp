@@ -8,7 +8,6 @@
 #ifndef BITBOARD_HPP_
 #define BITBOARD_HPP_
 
-#include <vector>
 #include <bitset>
 
 class BitBoard {
@@ -22,11 +21,11 @@ public:
     bool get_bit(int y, int x);
     void reset();
 
-    std::vector<std::bitset<20>> &getBitboard();
+    std::bitset<400> &getBitboard();
 
     void printToOutput();
 private:
-    std::vector<std::bitset<20>> _bitboard;
+    std::bitset<400> _bitboard;
 };
 
 #endif /* !BITBOARD_HPP_ */

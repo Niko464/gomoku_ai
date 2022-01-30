@@ -8,9 +8,9 @@
 #ifndef BOARD_HPP_
 #define BOARD_HPP_
 
-#include <vector>
 #include "BitBoard.hpp"
 #include "PlayerTypes.hpp"
+#include <vector>
 
 class Board {
 public:
@@ -21,9 +21,11 @@ public:
     void makeMove(int y, int x, player_types playerType);
     void unmakeMove(int y, int x, player_types playerType);
     void reset();
-    std::vector<std::bitset<20>> &getPlayerBoard(player_types playerType);
+    std::bitset<400> &getPlayerBoard(player_types playerType);
 
     void printToOutput();
+
+    std::vector<std::pair<int, int>> getValidMoves();
 private:
     BitBoard bitboards[2];
 };

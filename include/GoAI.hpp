@@ -10,12 +10,15 @@
 
 #include "Board.hpp"
 
+#define WIN_SCORE 100000
+
 class GoAI {
 public:
     GoAI();
     ~GoAI();
 
     void startThinking(Board &currentBoard, int timeout);
+    int startDeepeningSearch(Board &board, int timeForSearch);
 protected:
 
 };

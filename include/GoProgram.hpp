@@ -8,6 +8,7 @@
 #ifndef GoProgram_HPP_
 #define GoProgram_HPP_
 
+#include <vector>
 #include <thread>
 #include "Game.hpp"
 

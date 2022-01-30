@@ -57,7 +57,23 @@ void Board::reset()
     this->bitboards[1].reset();
 }
 
-std::vector<std::bitset<20>> &Board::getPlayerBoard(player_types playerType)
+std::bitset<400> &Board::getPlayerBoard(player_types playerType)
 {
     return this->bitboards[playerType].getBitboard();
+}
+
+/*
+TODO: improve this, we shouldn't consider all squares !
+*/
+std::vector<std::pair<int, int>> Board::getValidMoves()
+{
+    std::vector<std::pair<int, int>> to_return;
+
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 20; x++) {
+            if (this->canMakeMove(y, x))
+                to_return.push_back(std::make_pair(y, x));
+        }
+    }
+    return to_return;
 }
