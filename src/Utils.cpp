@@ -13,7 +13,7 @@ std::vector<std::string> Utils::splitStr(const std::string &s, const std::string
     std::vector<std::string> to_return;
 
     int start = 0;
-    int end = s.find(del);
+    size_t end = s.find(del);
     int count = 0;
     while (end != std::string::npos) {
         to_return.push_back(s.substr(start, end - start));
@@ -37,7 +37,7 @@ char Utils::getPlayerChar(player_types type)
 
 bool Utils::isInt(const std::string &str)
 {
-    for (int i = 0; i < str.length(); i++) {
+    for (size_t i = 0; i < str.length(); i++) {
         if (!std::isdigit(str[i]) && !(i == 0 && str[i] == '-'))
             return false;
     }

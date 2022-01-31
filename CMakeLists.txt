@@ -7,10 +7,11 @@ add_executable(
     src/Board.cpp
     src/Game.cpp
     src/Utils.cpp
+    src/TranspositionTable.cpp
     src/GoProgram.cpp
     src/BitBoard.cpp
     src/GoAI.cpp
-    src/main.cpp
+    src/main/main.cpp
     src/Utils.cpp
 )
 

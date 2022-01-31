@@ -9,6 +9,7 @@
 #define GoAI_HPP_
 
 #include "Board.hpp"
+#include "TranspositionTable.hpp"
 
 #define WIN_SCORE 100000
 
@@ -20,7 +21,7 @@ public:
     void startThinking(Board &currentBoard, int timeout);
     int startDeepeningSearch(Board &board, int timeForSearch);
 protected:
-
+    TranspositionTable _transpositionTable;
 };
 
 #endif 

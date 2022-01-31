@@ -11,7 +11,10 @@
 #include <thread>
 #include <bits/stdc++.h>
 
-GoAI::GoAI() {}
+GoAI::GoAI() : _transpositionTable(time(NULL))
+{
+
+}
 
 GoAI::~GoAI() {}
 
@@ -42,6 +45,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
 
         currentBoard.makeMove(move.first, move.second, player_types::AI);
         currScore = this->startDeepeningSearch(currentBoard, timePerIterativeSearch);
+        currentBoard.unmakeMove(move.first, move.second, player_types::AI);
 
         //TODO if doesn't work, WIN_SCORE might be too low
         if (currScore >= WIN_SCORE) {
@@ -57,7 +61,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
     std::cout << currBestMove.second << "," << currBestMove.first << std::endl;
 }
 
-int startDeepeningSearch(Board &board, int timeForSearch)
+int GoAI::startDeepeningSearch(Board &board, int timeForSearch)
 {
 
 }

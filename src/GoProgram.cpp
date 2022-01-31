@@ -50,7 +50,7 @@ void GoProgram::parseEntry(std::string &entry)
 
     if (splitted.size() == 0)
         return;
-    for (int amtCmds = 0; amtCmds < fnPtrs.size(); amtCmds++) {
+    for (size_t amtCmds = 0; amtCmds < fnPtrs.size(); amtCmds++) {
         if (splitted.at(0).compare(fnPtrs.at(amtCmds).first) == 0) {
             foundCmd = true;
             CALL_MEMBER_FN(*this, fnPtrs.at(amtCmds).second)(splitted);

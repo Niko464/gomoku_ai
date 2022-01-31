@@ -77,3 +77,8 @@ std::vector<std::pair<int, int>> Board::getValidMoves()
     }
     return to_return;
 }
+
+bool Board::isSquareTakenBy(int y, int x, player_types playerType)
+{
+    return this->bitboards[playerType].get_bit(y, x);
+}

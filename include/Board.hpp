@@ -22,10 +22,9 @@ public:
     void unmakeMove(int y, int x, player_types playerType);
     void reset();
     std::bitset<400> &getPlayerBoard(player_types playerType);
-
-    void printToOutput();
-
     std::vector<std::pair<int, int>> getValidMoves();
+    bool isSquareTakenBy(int y, int x, player_types playerType);
+    void printToOutput();
 private:
     BitBoard bitboards[2];
 };
