@@ -10,6 +10,7 @@
 
 #include "Board.hpp"
 #include "TranspositionTable.hpp"
+#include "BoardEvaluator.hpp"
 
 #define WIN_SCORE 100000
 
@@ -19,9 +20,14 @@ public:
     ~GoAI();
 
     void startThinking(Board &currentBoard, int timeout);
-    int startDeepeningSearch(Board &board, int timeForSearch);
+    int minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser);
 protected:
     TranspositionTable _transpositionTable;
+    BoardEvaluator _evaluator;
+private:
+    std::chrono::_V2::system_clock::time_point _startingTime;
+    bool _shouldStopSearching;
+    int _timeoutTime;
 };
 
 #endif 
