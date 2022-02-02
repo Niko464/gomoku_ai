@@ -70,62 +70,36 @@ GTEST_TEST (TranspositionTableTests, one)
     ASSERT_EQ(hashFour, 1804289383 ^ 1681692777);
 }
 
-GTEST_TEST(BoardEvaluatorTests, findPattern)
+GTEST_TEST(BoardEvaluatorTests, didPlayerWin_Right)
 {
     Board board;
     BoardEvaluator evaluator;
-    int foundCases = 0;
-
-    /*evaluatorSizes testCaseRight = {6, 6, true};
-
-    testCaseRight.testCase.set(20 + 1);
-    testCaseRight.testCase.set(40 + 2);
-    testCaseRight.testCase.set(60 + 3);
-    testCaseRight.testCase.set(80 + 4);
-
-    testCaseRight.spaceTestCase.set(0);
-    testCaseRight.spaceTestCase.set(100 + 5);*/
-
-    /*evaluatorSizes testCaseRight = {6, 6, true};
-
-    testCaseRight.spaceTestCase.set(5);
-    testCaseRight.testCase.set(20 + 4);
-    testCaseRight.testCase.set(40 + 3);
-    testCaseRight.testCase.set(60 + 2);
-    testCaseRight.testCase.set(80 + 1);
-
     
-    testCaseRight.spaceTestCase.set(100);*/
+    board.makeMove(3, 3, player_types::AI);
+    board.makeMove(3, 4, player_types::AI);
+    board.makeMove(3, 5, player_types::AI);
+    board.makeMove(3, 6, player_types::AI);
+    board.makeMove(3, 7, player_types::AI);
+    board.makeMove(14, 13, player_types::AI);
 
-    evaluatorSizes testCaseRight = {6, 1, true};
+    board.makeMove(0, 3, player_types::PLAYER);
+    board.makeMove(18, 13, player_types::PLAYER);
 
-    testCaseRight.spaceTestCase.set(0);
-    testCaseRight.testCase.set(20);
-    testCaseRight.testCase.set(40);
-    testCaseRight.testCase.set(60);
-    testCaseRight.testCase.set(80);
-    testCaseRight.spaceTestCase.set(100);
+    ASSERT_EQ(evaluator.didPlayerWin(board, player_types::PLAYER), false);
+    ASSERT_EQ(evaluator.didPlayerWin(board, player_types::AI), true);
 
-    evaluator._findPattern(testCaseRight, board,
-        [&](Board &myBoard, evaluatorSizes &params) {
+    board.reset();
 
+    board.makeMove(8, 8, player_types::PLAYER);
+    board.makeMove(9, 9, player_types::PLAYER);
+    board.makeMove(10, 10, player_types::PLAYER);
+    board.makeMove(11, 11, player_types::PLAYER);
+    ASSERT_EQ(evaluator.didPlayerWin(board, player_types::PLAYER), false);
+    board.makeMove(12, 12, player_types::PLAYER);
+    ASSERT_EQ(evaluator.didPlayerWin(board, player_types::PLAYER), true);
 
-            Utils::printBitBoard<400>(20, 20, params.testCase);
-            std::cout << "\n" << std::endl;
-
-            std::bitset<400> aiBoard = myBoard.getPlayerBoard(player_types::AI);
-            std::bitset<400> playerBoard = myBoard.getPlayerBoard(player_types::PLAYER);
-
-            if ((aiBoard & params.testCase) == params.testCase &&
-                (aiBoard ^ params.spaceTestCase) == params.spaceTestCase &&
-                (playerBoard ^ params.spaceTestCase) == params.spaceTestCase) {
-                foundCases++;
-            }
-            
-        }
-    );
-    ASSERT_EQ(foundCases, 0)
 }
+
 
 int main(int ac, char **av)
 {
