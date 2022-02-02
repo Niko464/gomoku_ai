@@ -8,9 +8,31 @@
 #include <bitset>
 
 int main() {
-    GoProgram GoProgram;
+    
+    /*GoProgram GoProgram;
 
-    GoProgram.startInputLoop();
+    GoProgram.startInputLoop();*/
+
+
+    /*
+    Bitset checks:
+    
+    std::bitset<9> player("011110000");
+    std::bitset<9> ai("000000011");
+
+    std::bitset<9> test("011110000");
+    std::bitset<9> sec_test("0111101111");
+
+    //0 & 1 = 1
+    //1 & 1 = 1
+    //1 & 0 = 0
+    //0 & 0 = 0
+
+    std::cout << (ai ^ sec_test) << std::endl;
+    
+    if ((player & test) == test && (ai ^ sec_test) == sec_test) {
+        std::cout << "YES" << std::endl;
+    }*/
 
     /*
     Time manipulation test:
@@ -44,3 +66,14 @@ int main() {
     std::cout << (map == straightDownCheck) << std::endl;
     std::cout << straightDownCheck << std::endl;*/
 }
+
+/*
+
+_XXXX_
+_XX_X_    _X_XX_
+XXXX_     _XXXX      XXX_X    X_XXX     XX_XX
+_XXX_     _X_XX      XX_X_
+
+
+
+*/

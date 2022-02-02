@@ -7,7 +7,6 @@
 
 #include "GoAI.hpp"
 #include <iostream>
-#include <chrono>
 #include <thread>
 #include <bits/stdc++.h>
 #include <algorithm>
@@ -62,24 +61,25 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
     std::cout << globalBestMove.second << "," << globalBestMove.first << std::endl;
 }
 
+//TODO: use the transposition table
+//TODO: clear the transposition table from time to time
+//TODO: I think that bestEvaluation is useless, we can just use apha and beta instead
 int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser)
 {
     auto endingTime = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = endingTime - this->_startingTime;
-    int score = -1;
     std::vector<std::pair<int, int>> moves;
 
     if (elapsed.count() * 1000 >= this->_timeoutTime - 500) {
         this->_shouldStopSearching = true;
         return alpha;
     }
-    
-    score = this->_evaluator.evaluateBoard(board);
-    if (depth == 0 || score >= WIN_SCORE || score <= -WIN_SCORE)
-        return score;
+    //TODO: add a check if (is someone won the game)
+    if (depth == 0) //if (depth == 0 || score >= WIN_SCORE || score <= -WIN_SCORE)
+        return this->_evaluator.evaluateBoard(board);
     moves = board.getValidMoves();
     if (moves.size() == 0)
-        return score;
+        return this->_evaluator.evaluateBoard(board);
     if (isMaximiser) {
         //we're trying to maximize this
         int bestEvaluation = INT_MIN;

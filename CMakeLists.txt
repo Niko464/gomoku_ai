@@ -13,6 +13,7 @@ add_executable(
     src/GoAI.cpp
     src/main/main.cpp
     src/Utils.cpp
+    src/BoardEvaluator.cpp
 )
 
 target_include_directories(pbrain-gomoku-ai PUBLIC

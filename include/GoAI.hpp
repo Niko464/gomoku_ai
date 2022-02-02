@@ -11,6 +11,7 @@
 #include "Board.hpp"
 #include "TranspositionTable.hpp"
 #include "BoardEvaluator.hpp"
+#include <chrono>
 
 #define WIN_SCORE 100000
 
