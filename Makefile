@@ -14,6 +14,12 @@ all: cmake
 cmake:
 	mkdir build && cd ./build && cmake .. && ((make && mv pbrain-gomoku-ai ..) || echo 'Windows system detected')
 
+tests_run:
+	@g++ -o unit_tests src/*.cpp tests/tests_patterns.cpp $(CFLAGS) -pthread -lcriterion --coverage
+	@echo "[✔️] Compiled tests"
+	@./unit_tests
+
+
 google_tests_run:
 	@g++ -o unit_tests src/*.cpp tests/tests.cpp $(CFLAGS) -pthread -lgtest
 	@echo "✔️ Compiled tests"

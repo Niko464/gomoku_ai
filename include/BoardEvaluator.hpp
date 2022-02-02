@@ -23,7 +23,6 @@ class BoardEvaluator {
 public:
     BoardEvaluator();
     ~BoardEvaluator();
-
     //TODO: check if this function should know who's turn it is
     //TODO: this needs to return a really high number if ai wins and vice versa
     int evaluateBoard(Board &board);
