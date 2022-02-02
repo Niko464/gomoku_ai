@@ -9,6 +9,15 @@
 #define BOARDEVALUATOR_HPP_
 
 #include "Board.hpp"
+#include <functional>
+
+struct evaluatorSizes {
+    int testSizeY;
+    int testSizeX;
+    bool hasSpaces;
+    std::bitset<400> testCase;
+    std::bitset<400> spaceTestCase;
+};
 
 class BoardEvaluator {
 public:
@@ -18,9 +27,15 @@ public:
     //TODO: check if this function should know who's turn it is
     //TODO: this needs to return a really high number if ai wins and vice versa
     int evaluateBoard(Board &board);
+    bool didPlayerWin(Board &board, player_types playerType);
+
+    void _findPattern(
+        evaluatorSizes &params,
+        Board &board,
+        std::function<void(Board &, evaluatorSizes &)> callback
+    );
 
 private:
-
 };
 
 #endif /* !BOARDEVALUATOR_HPP_ */

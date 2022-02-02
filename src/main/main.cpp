@@ -8,7 +8,6 @@
 #include <bitset>
 
 int main() {
-    
     /*GoProgram GoProgram;
 
     GoProgram.startInputLoop();*/
@@ -46,33 +45,30 @@ int main() {
     std::cout << "MESSAGE " << "test " << elapsed.count() * 1000 << " time" << std::endl;*/
     
     
-    /*
-    Bitset comparaison test:
+    
+    //Bitset comparaison test:
     
     std::bitset<9> map;
 
+    map.set(0);
     map.set(1);
-    map.set(4);
-    map.set(7);
+    map.set(2);
+    map.set(8);
 
     std::bitset<9> straightDownCheck;
     straightDownCheck.set(0);
-    straightDownCheck.set(3);
-    straightDownCheck.set(6);
+    straightDownCheck.set(1);
+    straightDownCheck.set(2);
 
-    std::cout << map << std::endl;
-    std::cout << straightDownCheck << std::endl;
-    straightDownCheck <<= 1;
-    std::cout << (map == straightDownCheck) << std::endl;
-    std::cout << straightDownCheck << std::endl;*/
+    std::cout << ((map & straightDownCheck) == straightDownCheck) << std::endl;
 }
 
 /*
 
-_XXXX_
-_XX_X_    _X_XX_
-XXXX_     _XXXX      XXX_X    X_XXX     XX_XX
-_XXX_     _X_XX      XX_X_
+_XXXX_                                          1000
+_XX_X_    _X_XX_                                700
+XXXX_     _XXXX      XXX_X    X_XXX     XX_XX   500
+_XXX_     _X_XX      XX_X_                      200
 
 
 
