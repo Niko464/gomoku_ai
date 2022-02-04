@@ -43,24 +43,6 @@ int main() {
     std::chrono::duration<double> elapsed = endingTime - startingTime;
 
     std::cout << "MESSAGE " << "test " << elapsed.count() * 1000 << " time" << std::endl;*/
-    
-    
-    
-    //Bitset comparaison test:
-    
-    std::bitset<9> map;
-
-    map.set(0);
-    map.set(1);
-    map.set(2);
-    map.set(8);
-
-    std::bitset<9> straightDownCheck;
-    straightDownCheck.set(0);
-    straightDownCheck.set(1);
-    straightDownCheck.set(2);
-
-    std::cout << ((map & straightDownCheck) == straightDownCheck) << std::endl;
 }
 
 /*
