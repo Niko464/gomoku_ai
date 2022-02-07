@@ -10,13 +10,7 @@
 #include "Board.hpp"
 #include "BoardEvaluator.hpp"
 #include "Utils.hpp"
-
-void printMoves(std::vector<std::pair<int, int>> &moves)
-{
-    for (int i = 0; i < moves.size(); i++) {
-        std::cout << moves[i].first << "," << moves[i].second << std::endl;
-    }
-}
+#include "GoAI.hpp"
 
 GTEST_TEST(BoardTests, canMakeMoveAndUnmake)
 {
@@ -51,11 +45,11 @@ GTEST_TEST(BoardTests, isSquareTaken)
 GTEST_TEST(BoardTests, validMoves)
 {
     Board board;
-    std::vector<std::pair<int, int>> moves;
+    std::vector<Vec2> moves;
 
     moves = board.getValidMoves(3);
     testing::internal::CaptureStdout();
-    printMoves(moves);
+    Utils::printMoves(moves);
     std::string output = testing::internal::GetCapturedStdout();
     ASSERT_EQ(output, "");
 
@@ -63,7 +57,7 @@ GTEST_TEST(BoardTests, validMoves)
     board.makeMove(0, 0, player_types::AI);
     moves = board.getValidMoves(2);
     testing::internal::CaptureStdout();
-    printMoves(moves);
+    Utils::printMoves(moves);
     output = testing::internal::GetCapturedStdout();
     ASSERT_EQ(moves.size(), 8);
     ASSERT_EQ(output, "0,1\n0,2\n1,0\n1,1\n1,2\n2,0\n2,1\n2,2\n");
@@ -73,7 +67,7 @@ GTEST_TEST(BoardTests, validMoves)
     board.makeMove(19, 19, player_types::PLAYER);
     moves = board.getValidMoves(3);
     testing::internal::CaptureStdout();
-    printMoves(moves);
+    Utils::printMoves(moves);
     output = testing::internal::GetCapturedStdout();
     ASSERT_EQ(moves.size(), 15);
     ASSERT_EQ(output, "16,16\n16,17\n16,18\n16,19\n17,16\n17,17\n17,18\n17,19\n18,16\n18,17\n18,18\n18,19\n19,16\n19,17\n19,18\n");
@@ -83,7 +77,7 @@ GTEST_TEST(BoardTests, validMoves)
     board.makeMove(9, 9, player_types::AI);
     moves = board.getValidMoves(2);
     testing::internal::CaptureStdout();
-    printMoves(moves);
+    Utils::printMoves(moves);
     output = testing::internal::GetCapturedStdout();
     ASSERT_EQ(moves.size(), 24);
 
@@ -93,7 +87,7 @@ GTEST_TEST(BoardTests, validMoves)
     board.makeMove(9, 10, player_types::PLAYER);
     moves = board.getValidMoves(1);
     testing::internal::CaptureStdout();
-    printMoves(moves);
+    Utils::printMoves(moves);
     output = testing::internal::GetCapturedStdout();
     ASSERT_EQ(moves.size(), 10);
     ASSERT_EQ(output, "8,8\n8,9\n8,10\n9,8\n10,8\n10,9\n10,10\n8,11\n9,11\n10,11\n");
@@ -154,6 +148,28 @@ GTEST_TEST(BoardEvaluatorTests, didPlayerWin_Right)
     board.makeMove(12, 12, player_types::PLAYER);
     ASSERT_EQ(evaluator.didPlayerWin(board, player_types::PLAYER), true);
 
+}
+
+GTEST_TEST(globalIntelligence, testOne)
+{
+    GoAI ai;
+    Board board;
+
+    /*board.makeMove(9, 4, player_types::PLAYER);
+    board.makeMove(9, 5, player_types::PLAYER);
+    board.makeMove(9, 6, player_types::PLAYER);
+    board.makeMove(9, 7, player_types::PLAYER);
+
+    ai.startThinking(board, 5000, false);
+
+    board.reset();*/
+
+    board.makeMove(0, 0, player_types::AI);
+    board.makeMove(1, 1, player_types::AI);
+    board.makeMove(2, 2, player_types::AI);
+    board.makeMove(3, 3, player_types::AI);
+
+    ai.startThinking(board, 5000, true);
 }
 
 

@@ -11,6 +11,7 @@
 #include "BitBoard.hpp"
 #include "PlayerTypes.hpp"
 #include <vector>
+#include <Vec2.hpp>
 
 class Board {
 public:
@@ -22,10 +23,10 @@ public:
     void unmakeMove(int y, int x, player_types playerType);
     void reset();
     std::bitset<400> &getPlayerBoard(player_types playerType);
-    std::vector<std::pair<int, int>> getValidMoves(int radius);
+    std::vector<Vec2> getValidMoves(int radius);
     bool isSquareTakenBy(int y, int x, player_types playerType);
     void printToOutput();
-    void _checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, int y, int radius);
+    void _checkSurroundings(std::vector<Vec2> &coords, int x, int y, int radius);
 private:
     BitBoard bitboards[2];
 };

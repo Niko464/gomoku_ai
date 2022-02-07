@@ -29,7 +29,7 @@ bool Game::makeMove(player_types playerType, int y, int x)
 
 void Game::aiStartThinking()
 {
-    this->_ai.startThinking(this->_board, this->_timeout);
+    this->_ai.startThinking(this->_board, this->_timeout, true);
 }
 
 void Game::aiMakeFirstMove()

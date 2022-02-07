@@ -13,12 +13,13 @@
 #include "PlayerTypes.hpp"
 #include <bitset>
 #include <iostream>
+#include "Vec2.hpp"
 
 namespace Utils {
     std::vector<std::string> splitStr(const std::string &s, const std::string &del);
     char getPlayerChar(player_types type);
     bool isInt(const std::string &str);
-
+    void printMoves(std::vector<Vec2> &moves);
     template <int boardSize>
     void printBitBoard(int sizeY, int sizeX, std::bitset<boardSize> &bitboard)
     {

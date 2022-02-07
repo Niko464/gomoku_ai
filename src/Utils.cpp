@@ -43,3 +43,10 @@ bool Utils::isInt(const std::string &str)
     }
     return true;
 }
+
+void Utils::printMoves(std::vector<Vec2> &moves)
+{
+    for (size_t i = 0; i < moves.size(); i++) {
+        std::cout << moves[i].y << "," << moves[i].x << std::endl;
+    }
+}

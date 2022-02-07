@@ -59,7 +59,7 @@ std::bitset<400> &Board::getPlayerBoard(player_types playerType)
     return this->bitboards[playerType].getBitboard();
 }
 
-void Board::_checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, int y, int radius)
+void Board::_checkSurroundings(std::vector<Vec2> &coords, int x, int y, int radius)
 {
     int i_min, j_min, i_max, j_max = 0;
 
@@ -85,17 +85,21 @@ void Board::_checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, 
     for (int i = i_min; i <= i_max; i++) {
         for (int j = j_min; j <= j_max; j++) {
             if (this->canMakeMove(i, j) && std::find_if(coords.begin(), coords.end(),
-                [i, j](std::pair<int, int> &coords) {
-                    return (i == coords.first && j == coords.second);
-                }) == coords.end())
-                coords.push_back(std::make_pair(i, j));
+                [i, j](Vec2 &coords) {
+                    return (i == coords.y && j == coords.x);
+                }) == coords.end()) {
+                Vec2 toPush;
+                toPush.y = i;
+                toPush.x = j;
+                coords.push_back(toPush);
+                }
         }
     }
 }
 
-std::vector<std::pair<int, int>> Board::getValidMoves(int radius)
+std::vector<Vec2> Board::getValidMoves(int radius)
 {
-    std::vector<std::pair<int, int>> to_return;
+    std::vector<Vec2> to_return;
 
     for (int y = 0; y < 20; y++) {
         for (int x = 0; x < 20; x++) {

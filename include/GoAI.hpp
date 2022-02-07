@@ -11,6 +11,7 @@
 #include "Board.hpp"
 #include "TranspositionTable.hpp"
 #include "BoardEvaluator.hpp"
+#include "Vec2.hpp"
 #include <chrono>
 
 class GoAI {
@@ -18,9 +19,9 @@ public:
     GoAI();
     ~GoAI();
 
-    void startThinking(Board &currentBoard, int timeout);
+    void startThinking(Board &currentBoard, int timeout, bool debug);
     void makeFirstMove(Board &currentBoard, int timeout);
-    int minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser);
+    int minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser, bool debug);
 protected:
     TranspositionTable _transpositionTable;
     BoardEvaluator _evaluator;
@@ -29,10 +30,8 @@ private:
     bool _shouldStopSearching;
     int _timeoutTime;
     int _currentDepth;
-    std::pair<int, int> globalBestMove;
-    std::pair<int, int> currBestMove;
-
-    int returnEvaluatedBoard(Board &board);
+    Vec2 globalBestMove;
+    Vec2 currBestMove;
 };
 
 #endif 

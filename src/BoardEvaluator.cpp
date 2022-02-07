@@ -87,7 +87,6 @@ int BoardEvaluator::_lateralSearch(Board &board, std::string const &pattern, int
         if ((((player == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
             (!params.hasSpaces || (~aiBoard & params.spaceTestCase) == params.spaceTestCase) && (~playerBoard & params.spaceTestCase) == params.spaceTestCase) {
             score += value;
-            std::cout << pattern << std::endl;
         }
     });
     return (score);
@@ -150,52 +149,5 @@ void BoardEvaluator::_findPattern(
 
 bool BoardEvaluator::didPlayerWin(Board &board, player_types playerTypes)
 {
-    bool to_return = false;
-
-    evaluatorSizes testcase = {1, 5, false};
-
-    testcase.testCase.set(0);
-    testcase.testCase.set(1);
-    testcase.testCase.set(2);
-    testcase.testCase.set(3);
-    testcase.testCase.set(4);
-
-    std::function<void(Board &, evaluatorSizes &)> func = [&](Board &myBoard, evaluatorSizes &params) {
-        std::bitset<400> &aiBoard = myBoard.getPlayerBoard(player_types::AI);
-        std::bitset<400> &playerBoard = myBoard.getPlayerBoard(player_types::PLAYER);
-
-        if ((((playerTypes == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
-            (!params.hasSpaces || (aiBoard ^ params.spaceTestCase) == params.spaceTestCase && (playerBoard ^ params.spaceTestCase) == params.spaceTestCase)) {
-            to_return = true;
-        }
-        
-    };
-
-    this->_findPattern(testcase, board, func);
-    testcase.testCase.reset();
-    testcase.testSizeX = 5;
-    testcase.testSizeY = 5;
-    testcase.testCase.set(0);
-    testcase.testCase.set(21);
-    testcase.testCase.set(42);
-    testcase.testCase.set(63);
-    testcase.testCase.set(84);
-    this->_findPattern(testcase, board, func);
-    testcase.testCase.reset();
-    testcase.testCase.set(4);
-    testcase.testCase.set(23);
-    testcase.testCase.set(42);
-    testcase.testCase.set(61);
-    testcase.testCase.set(80);
-    this->_findPattern(testcase, board, func);
-    testcase.testCase.reset();
-    testcase.testSizeX = 1;
-    testcase.testSizeY = 5;
-    testcase.testCase.set(0);
-    testcase.testCase.set(20);
-    testcase.testCase.set(40);
-    testcase.testCase.set(60);
-    testcase.testCase.set(80);
-    this->_findPattern(testcase, board, func);
-    return to_return;
+    return (this->_getScoreFromPattern(board, "11111", 1) == (playerTypes == player_types::AI ? 1 : -1));
 }
