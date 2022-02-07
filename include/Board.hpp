@@ -25,6 +25,7 @@ public:
     std::vector<std::pair<int, int>> getValidMoves();
     bool isSquareTakenBy(int y, int x, player_types playerType);
     void printToOutput();
+    void _checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, int y, int radius);
 private:
     BitBoard bitboards[2];
 };
