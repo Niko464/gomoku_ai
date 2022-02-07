@@ -18,6 +18,8 @@ TranspositionTable::TranspositionTable(unsigned int seed)
             this->_keys.push_back(std::make_pair(randIA, randPlayer));
         }
     }
+    /*this->_turnKeys.push_back(rand());
+    this->_turnKeys.push_back(rand());*/
 }
 
 TranspositionTable::~TranspositionTable() {}
@@ -45,4 +47,9 @@ bool TranspositionTable::knowsHash(const int hash)
 void TranspositionTable::storeHash(const int hash, TranspositionValue value)
 {
     this->_table.insert(std::make_pair(hash, value));
+}
+
+TranspositionValue &TranspositionTable::getStoredValue(const int hash)
+{
+    return this->_table.at(hash);
 }

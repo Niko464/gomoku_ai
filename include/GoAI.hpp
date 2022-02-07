@@ -13,8 +13,6 @@
 #include "BoardEvaluator.hpp"
 #include <chrono>
 
-#define WIN_SCORE 100000
-
 class GoAI {
 public:
     GoAI();
@@ -29,6 +27,11 @@ private:
     std::chrono::_V2::system_clock::time_point _startingTime;
     bool _shouldStopSearching;
     int _timeoutTime;
+    int _currentDepth;
+    std::pair<int, int> globalBestMove;
+    std::pair<int, int> currBestMove;
+
+    int returnEvaluatedBoard(Board &board);
 };
 
 #endif 

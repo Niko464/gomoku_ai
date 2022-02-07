@@ -8,41 +8,9 @@
 #include <bitset>
 
 int main() {
-    /*GoProgram GoProgram;
+    GoProgram GoProgram;
 
-    GoProgram.startInputLoop();*/
-
-
-    /*
-    Bitset checks:
-    
-    std::bitset<9> player("011110000");
-    std::bitset<9> ai("000000011");
-
-    std::bitset<9> test("011110000");
-    std::bitset<9> sec_test("0111101111");
-
-    //0 & 1 = 1
-    //1 & 1 = 1
-    //1 & 0 = 0
-    //0 & 0 = 0
-
-    std::cout << (ai ^ sec_test) << std::endl;
-    
-    if ((player & test) == test && (ai ^ sec_test) == sec_test) {
-        std::cout << "YES" << std::endl;
-    }*/
-
-    /*
-    Time manipulation test:
-
-    auto startingTime = std::chrono::system_clock::now();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    auto endingTime = std::chrono::system_clock::now();
-
-    std::chrono::duration<double> elapsed = endingTime - startingTime;
-
-    std::cout << "MESSAGE " << "test " << elapsed.count() * 1000 << " time" << std::endl;*/
+    GoProgram.startInputLoop();
 }
 
 /*

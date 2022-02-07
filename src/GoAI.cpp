@@ -42,9 +42,8 @@ for (auto &move : currentPossibleMoves) {
 
 void GoAI::startThinking(Board &currentBoard, int timeoutTime)
 {
-    std::pair<int, int> globalBestMove(-1, -1);
-    std::pair<int, int> currBestMove(-1, -1);
-
+    this->globalBestMove = {-1, -1};
+    this->currBestMove = {-1, -1};
     this->_startingTime = std::chrono::system_clock::now();
     this->_shouldStopSearching = false;
     this->_timeoutTime = timeoutTime;
@@ -54,16 +53,17 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
             globalBestMove = currBestMove;
             std::cout << "MESSAGE depth " << depth << " done. I will move: x:" << globalBestMove.second << " y:" << globalBestMove.first << std::endl; 
         }
+        this->_currentDepth = depth;
         this->minimax(currentBoard, depth, INT_MIN, INT_MAX, true);
         if (this->_shouldStopSearching)
             break;
     }
+    std::cout << "MESSAGE my time is up, I am moving " << globalBestMove.second << "," << globalBestMove.first << std::endl;
     std::cout << globalBestMove.second << "," << globalBestMove.first << std::endl;
 }
 
 //TODO: use the transposition table
 //TODO: clear the transposition table from time to time
-//TODO: I think that bestEvaluation is useless, we can just use apha and beta instead
 int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser)
 {
     auto endingTime = std::chrono::system_clock::now();
@@ -72,39 +72,57 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
 
     if (elapsed.count() * 1000 >= this->_timeoutTime - 500) {
         this->_shouldStopSearching = true;
-        return alpha;
+        return (isMaximiser ? alpha : beta);
     }
-    //TODO: add a check if (is someone won the game)
-    if (depth == 0) //if (depth == 0 || score >= WIN_SCORE || score <= -WIN_SCORE)
-        return this->_evaluator.evaluateBoard(board);
+    if (depth == 0)
+        return this->returnEvaluatedBoard(board);
+    if (isMaximiser && this->_evaluator.didPlayerWin(board, player_types::AI))
+        return 10000000 - (this->_currentDepth - depth);
+    if (!isMaximiser && this->_evaluator.didPlayerWin(board, player_types::PLAYER))
+        return -10000000 - (this->_currentDepth - depth);
     moves = board.getValidMoves();
     if (moves.size() == 0)
-        return this->_evaluator.evaluateBoard(board);
+        return this->returnEvaluatedBoard(board);
     if (isMaximiser) {
         //we're trying to maximize this
-        int bestEvaluation = INT_MIN;
         for (auto &move : moves) {
             board.makeMove(move.first, move.second, player_types::AI);
             int evaluation = this->minimax(board, depth - 1, alpha, beta, false);
             board.unmakeMove(move.first, move.second, player_types::AI);
-            bestEvaluation = std::max(evaluation, bestEvaluation);
-            alpha = std::max(evaluation, alpha);
+            if (evaluation > alpha) {
+                alpha = evaluation;
+                if (depth == this->_currentDepth) {
+                    this->currBestMove = {move.first, move.second};
+                }
+            }
             //prune the next branches
             if (alpha >= beta)
                 break;
         }
-        return bestEvaluation;
+        return alpha;
     }
     // trying to minimize this
-    int bestEvaluation = INT_MAX;
     for (auto &move : moves) {
         board.makeMove(move.first, move.second, player_types::PLAYER);
         int evaluation = this->minimax(board, depth - 1, alpha, beta, true);
         board.unmakeMove(move.first, move.second, player_types::PLAYER);
-        bestEvaluation = std::min(evaluation, bestEvaluation);
         beta = std::min(evaluation, beta);
         if (alpha >= beta)
             break;
     }
-    return bestEvaluation;
+    return beta;
+}
+
+int GoAI::returnEvaluatedBoard(Board &board)
+{
+    int score = 0;
+    const int boardHash = this->_transpositionTable.computeHash(board);
+
+    if (this->_transpositionTable.knowsHash(boardHash)) {
+        std::cout << "MESSAGE " << "I know this board Hash ! " << boardHash << std::endl;
+        return this->_transpositionTable.getStoredValue(boardHash).score;
+    }
+    score = this->_evaluator.evaluateBoard(board);
+    this->_transpositionTable.storeHash(boardHash, (TranspositionValue) {score});
+    return score;
 }

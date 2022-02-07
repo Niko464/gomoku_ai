@@ -16,6 +16,7 @@ struct TranspositionValue {
     int score;
 };
 
+//TODO: think if the computeHash needs the player turn ????
 class TranspositionTable {
 public:
     TranspositionTable(unsigned int seed);
@@ -23,10 +24,11 @@ public:
 
     int computeHash(Board &board);
     bool knowsHash(const int hash);
-    //TODO: should this take a reference ?
     void storeHash(const int hash, const TranspositionValue value);
+    TranspositionValue &getStoredValue(const int hash);
 
 private:
+    //std::vector<int> _turnKeys;
     std::vector<std::pair<int, int>> _keys;
     std::unordered_map<int, TranspositionValue> _table; 
 };
