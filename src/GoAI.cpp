@@ -11,6 +11,7 @@
 //#include <bits/stdc++.h>
 #include <algorithm>
 #include "Utils.hpp"
+#include <climits>
 
 GoAI::GoAI() : _transpositionTable(time(NULL))
 {
@@ -88,7 +89,7 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
         return 10000000 - (this->_currentDepth - depth);
     if (!isMaximiser && this->_evaluator.didPlayerWin(board, player_types::PLAYER))
         return -10000000 - (this->_currentDepth - depth);
-    moves = board.getValidMoves();
+    moves = board.getValidMoves(3);
     if (moves.size() == 0)
         return this->returnEvaluatedBoard(board);
     if (isMaximiser) {
