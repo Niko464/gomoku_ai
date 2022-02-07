@@ -56,15 +56,15 @@ int BoardEvaluator::_verticalSearch(Board &board, std::string const &pattern, in
 
     Case.testSizeX = 1;
     Case.testSizeY = pattern.length();
-    Case.hasSpaces = (pattern.find_first_of(' ') != std::string::npos);
+    Case.hasSpaces = (pattern.find_first_of('0') != std::string::npos);
     for (int i = 0; i <= (Case.testSizeY - 1); i++)
         (pattern[i] == '1') ? Case.testCase.set(i * 20) : Case.spaceTestCase.set(i * 20);
     this->_findPattern(Case, board, [&](Board &myBoard, evaluatorSizes &params) {
         std::bitset<400> &aiBoard = myBoard.getPlayerBoard(player_types::AI);
         std::bitset<400> &playerBoard = myBoard.getPlayerBoard(player_types::PLAYER);
 
-        if ((((player == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
-            (!params.hasSpaces || (aiBoard ^ params.spaceTestCase) == params.spaceTestCase && (playerBoard ^ params.spaceTestCase) == params.spaceTestCase)) {
+       if ((((player == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
+            (!params.hasSpaces || (~aiBoard & params.spaceTestCase) == params.spaceTestCase) && (~playerBoard & params.spaceTestCase) == params.spaceTestCase) {
             score += value;
         }
     });
@@ -78,16 +78,16 @@ int BoardEvaluator::_lateralSearch(Board &board, std::string const &pattern, int
 
     Case.testSizeX = pattern.length();
     Case.testSizeY = 1;
-    Case.hasSpaces = (pattern.find_first_of(' ') != std::string::npos);
+    Case.hasSpaces = (pattern.find_first_of('0') != std::string::npos);
     for (int i = 0; i <= (Case.testSizeX - 1); i++)
         (pattern[i] == '1') ? Case.testCase.set(i) : Case.spaceTestCase.set(i);
     this->_findPattern(Case, board, [&](Board &myBoard, evaluatorSizes &params) {
         std::bitset<400> &aiBoard = myBoard.getPlayerBoard(player_types::AI);
         std::bitset<400> &playerBoard = myBoard.getPlayerBoard(player_types::PLAYER);
-
         if ((((player == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
-            (!params.hasSpaces || (aiBoard ^ params.spaceTestCase) == params.spaceTestCase && (playerBoard ^ params.spaceTestCase) == params.spaceTestCase)) {
+            (!params.hasSpaces || (~aiBoard & params.spaceTestCase) == params.spaceTestCase) && (~playerBoard & params.spaceTestCase) == params.spaceTestCase) {
             score += value;
+            std::cout << pattern << std::endl;
         }
     });
     return (score);
@@ -98,14 +98,14 @@ int BoardEvaluator::_diagonalSearch(Board &board, std::string const &pattern, in
     int score = 0;
     eval_t Case;
     Case.testSizeX = Case.testSizeY = pattern.length();
-    Case.hasSpaces = (pattern.find_first_of(' ') != std::string::npos);
+    Case.hasSpaces = (pattern.find_first_of('0') != std::string::npos);
 
     std::function<void(Board &, evaluatorSizes &)> cb = [&](Board &myBoard, evaluatorSizes &params) {
         std::bitset<400> &aiBoard = myBoard.getPlayerBoard(player_types::AI);
         std::bitset<400> &playerBoard = myBoard.getPlayerBoard(player_types::PLAYER);
 
         if ((((player == player_types::AI ? aiBoard : playerBoard) & params.testCase) == params.testCase) &&
-            (!params.hasSpaces || (aiBoard ^ params.spaceTestCase) == params.spaceTestCase && (playerBoard ^ params.spaceTestCase) == params.spaceTestCase)) {
+            (!params.hasSpaces || (~aiBoard & params.spaceTestCase) == params.spaceTestCase) && (~playerBoard & params.spaceTestCase) == params.spaceTestCase) {
             score += value;
         }
     };
