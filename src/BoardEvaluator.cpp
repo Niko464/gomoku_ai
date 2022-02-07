@@ -54,7 +54,7 @@ int BoardEvaluator::_verticalSearch(Board &board, std::string const &pattern, in
     int score = 0;
     eval_t Case;
 
-    Case.testSizeX = 0;
+    Case.testSizeX = 1;
     Case.testSizeY = pattern.length();
     Case.hasSpaces = (pattern.find_first_of(' ') != std::string::npos);
     for (int i = 0; i <= (Case.testSizeY - 1); i++)
@@ -77,7 +77,7 @@ int BoardEvaluator::_lateralSearch(Board &board, std::string const &pattern, int
     eval_t Case;
 
     Case.testSizeX = pattern.length();
-    Case.testSizeY = 0;
+    Case.testSizeY = 1;
     Case.hasSpaces = (pattern.find_first_of(' ') != std::string::npos);
     for (int i = 0; i <= (Case.testSizeX - 1); i++)
         (pattern[i] == '1') ? Case.testCase.set(i) : Case.spaceTestCase.set(i);
