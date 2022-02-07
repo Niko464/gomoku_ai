@@ -10,6 +10,7 @@
 
 #include "Board.hpp"
 #include <functional>
+#include <unordered_map>
 
 struct evaluatorSizes {
     int testSizeY;
@@ -18,6 +19,8 @@ struct evaluatorSizes {
     std::bitset<400> testCase;
     std::bitset<400> spaceTestCase;
 };
+
+typedef evaluatorSizes eval_t;
 
 class BoardEvaluator {
 public:
@@ -34,6 +37,11 @@ public:
     );
 
 private:
+    int _lateralSearch(Board &board, std::string const &pattern, int value, player_types player);
+    int _verticalSearch(Board &board, std::string const &pattern, int value, player_types player);
+    int _diagonalSearch(Board &board, std::string const &pattern, int value, player_types player);
+    int _getScoreFromPattern(Board &board, std::string const &pattern, int value);
+    std::unordered_map<std::string, int> __patterns;
 };
 
 #endif /* !BOARDEVALUATOR_HPP_ */
