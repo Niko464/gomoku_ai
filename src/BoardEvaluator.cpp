@@ -10,16 +10,16 @@
 #include <iostream>
 #include <algorithm>
 BoardEvaluator::BoardEvaluator() : __patterns({
-    {"011110", 20000},
-    {"01111", 20000},
-    {"10111", 20000},
-    {"11011", 20000},
-    {"11101", 20000},
-    {"11110", 20000},
-    {"011100", 20000},
-    {"001110", 20000},
-    {"01011", 20000},
-    {"10110", 20000}
+    {"011110", 100000},
+    {"10111", 45000},
+    {"11011", 45000},
+    {"11101", 45000},
+    {"01111", 42000},
+    {"11110", 42000},
+    {"01011", 18000},
+    {"10110", 18000},
+    {"011100", 15000},
+    {"001110", 15000}
 }) {}
 
 BoardEvaluator::~BoardEvaluator() {}
@@ -35,17 +35,17 @@ int BoardEvaluator::evaluateBoard(Board &board)
 
 int BoardEvaluator::_getScoreFromPattern(Board &board, std::string const &pattern, int value)
 {
-    std::string reverse = pattern;
+    /*std::string reverse = pattern;
 
-    std::reverse(reverse.begin(), reverse.end());
+    std::reverse(reverse.begin(), reverse.end());*/
     int score = 0;
 
     score += _verticalSearch(board, pattern, value, player_types::AI) - _verticalSearch(board, pattern, value, player_types::PLAYER);
     score += _lateralSearch(board, pattern, value, player_types::AI) - _lateralSearch(board, pattern, value, player_types::PLAYER);
     score += _diagonalSearch(board, pattern, value, player_types::AI) - _diagonalSearch(board, pattern, value, player_types::PLAYER);
-    score += _verticalSearch(board, reverse, value, player_types::AI) - _verticalSearch(board, reverse, value, player_types::PLAYER);
+    /*score += _verticalSearch(board, reverse, value, player_types::AI) - _verticalSearch(board, reverse, value, player_types::PLAYER);
     score += _lateralSearch(board, reverse, value, player_types::AI) - _lateralSearch(board, reverse, value, player_types::PLAYER);
-    score += _diagonalSearch(board, reverse, value, player_types::AI) - _diagonalSearch(board, reverse, value, player_types::PLAYER);
+    score += _diagonalSearch(board, reverse, value, player_types::AI) - _diagonalSearch(board, reverse, value, player_types::PLAYER);*/
     return (score);
 }
 

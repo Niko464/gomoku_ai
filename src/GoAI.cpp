@@ -55,10 +55,10 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
     this->_shouldStopSearching = false;
     this->_timeoutTime = timeoutTime;
     //Iterative Deepening infinite loop
-    for (int depth = 0; ; depth++) {
+    for (int depth = 0; depth < 400; depth++) {
         if (depth > 0) {
             globalBestMove = currBestMove;
-            std::cout << "MESSAGE Finishes calculating depth " << depth << ". I will move: x:" << globalBestMove.second << " y:" << globalBestMove.first << std::endl; 
+            std::cout << "MESSAGE Finished calculating depth " << depth << ". I will move: x:" << globalBestMove.second << " y:" << globalBestMove.first << std::endl; 
         }
         this->_currentDepth = depth;
         this->minimax(currentBoard, depth, INT_MIN, INT_MAX, true);
@@ -128,12 +128,12 @@ int GoAI::returnEvaluatedBoard(Board &board)
     const int boardHash = this->_transpositionTable.computeHash(board);
 
     if (this->_transpositionTable.knowsHash(boardHash)) {
-        std::cout << "MESSAGE " << "I know this board Hash ! " << boardHash << std::endl;
+        std::cout << "MESSAGE I know this board Hash ! " << boardHash << std::endl;
         return this->_transpositionTable.getStoredValue(boardHash);
     }
     score = this->_evaluator.evaluateBoard(board);
-    board.printToOutput();
-    std::cout << "MESSAGE score for the last printed board: " << score << std::endl; 
+    //board.printToOutput();
+    //std::cout << "MESSAGE score for the last printed board: " << score << std::endl; 
     this->_transpositionTable.storeHash(boardHash, score);
     std::cout << "MESSAGE storing hash " << boardHash << std::endl;
     return score;
