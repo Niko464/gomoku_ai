@@ -22,7 +22,7 @@ public:
     void unmakeMove(int y, int x, player_types playerType);
     void reset();
     std::bitset<400> &getPlayerBoard(player_types playerType);
-    std::vector<std::pair<int, int>> getValidMoves();
+    std::vector<std::pair<int, int>> getValidMoves(int radius);
     bool isSquareTakenBy(int y, int x, player_types playerType);
     void printToOutput();
     void _checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, int y, int radius);

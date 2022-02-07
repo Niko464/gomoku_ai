@@ -82,32 +82,26 @@ void Board::_checkSurroundings(std::vector<std::pair<int, int>> &coords, int x, 
     else
         j_max = 19;
 
-
-
     for (int i = i_min; i <= i_max; i++) {
         for (int j = j_min; j <= j_max; j++) {
             if (this->canMakeMove(i, j) && std::find_if(coords.begin(), coords.end(),
-                [y, x](std::pair<int, int> coords) {
-                    if (y == coords.first && x == coords.second)
-                        return (true);
-                    return (false);
-                }) != coords.end())
-                coords.push_back(std::make_pair(y, x));
+                [i, j](std::pair<int, int> &coords) {
+                    return (i == coords.first && j == coords.second);
+                }) == coords.end())
+                coords.push_back(std::make_pair(i, j));
         }
     }
 }
 
-/*
-TODO: improve this, we shouldn't consider all squares !
-*/
-std::vector<std::pair<int, int>> Board::getValidMoves()
+std::vector<std::pair<int, int>> Board::getValidMoves(int radius)
 {
     std::vector<std::pair<int, int>> to_return;
 
     for (int y = 0; y < 20; y++) {
         for (int x = 0; x < 20; x++) {
-            if (!this->canMakeMove(y, x))
-                this->_checkSurroundings(to_return, y, x, 3);
+            if (!this->canMakeMove(y, x)) {
+                this->_checkSurroundings(to_return, x, y, radius);
+            }
         }       
     }
     return to_return;
