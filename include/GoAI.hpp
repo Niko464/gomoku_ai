@@ -19,12 +19,13 @@ public:
     ~GoAI();
 
     void startThinking(Board &currentBoard, int timeout);
+    void makeFirstMove(Board &currentBoard, int timeout);
     int minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser);
 protected:
     TranspositionTable _transpositionTable;
     BoardEvaluator _evaluator;
 private:
-    std::chrono::_V2::system_clock::time_point _startingTime;
+    std::chrono::system_clock::time_point _startingTime;
     bool _shouldStopSearching;
     int _timeoutTime;
     int _currentDepth;

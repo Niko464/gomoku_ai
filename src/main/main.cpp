@@ -5,8 +5,6 @@
 
 //Ideas: try to take advantage of the BEGIN command, you basicaly have 5 seconds of free calculation to start thinking ahead
 
-#include <bitset>
-
 int main() {
     GoProgram GoProgram;
 

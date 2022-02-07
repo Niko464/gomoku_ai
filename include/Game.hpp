@@ -19,6 +19,7 @@ public:
     void reset();
     bool makeMove(player_types playerType, int y, int x);
     void aiStartThinking();
+    void aiMakeFirstMove();
     void setTimeOut(int timeoutMs);
 
 private:

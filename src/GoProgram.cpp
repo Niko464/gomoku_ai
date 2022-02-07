@@ -103,7 +103,7 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
 
 void GoProgram::beginCmd(std::vector<std::string> &params)
 {
-    this->_game.aiStartThinking();
+    this->_game.aiMakeFirstMove();
 }
 
 void GoProgram::boardCmd(std::vector<std::string> &params)

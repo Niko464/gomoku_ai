@@ -44,12 +44,12 @@ bool TranspositionTable::knowsHash(const int hash)
     return !(this->_table.find(hash) == this->_table.end());
 }
 
-void TranspositionTable::storeHash(const int hash, TranspositionValue value)
+void TranspositionTable::storeHash(const int hash, const int value)
 {
     this->_table.insert(std::make_pair(hash, value));
 }
 
-TranspositionValue &TranspositionTable::getStoredValue(const int hash)
+const int &TranspositionTable::getStoredValue(const int hash)
 {
     return this->_table.at(hash);
 }

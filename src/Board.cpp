@@ -15,12 +15,6 @@ Board::~Board() {}
 
 void Board::printToOutput()
 {
-    std::cout << "AI Bitboard" << std::endl;
-    this->bitboards[0].printToOutput();
-    std::cout << "Player Bitboard" << std::endl;
-    this->bitboards[1].printToOutput();
-
-    std::cout << "Final Board" << std::endl;
     for (int y = 0; y < 20; y++) {
         for (int x = 0; x < 20; x++) {
             int entityType = -1;
@@ -30,9 +24,11 @@ void Board::printToOutput()
                     break;
                 }
             }
+            if (x == 0)
+                std::cout << "MESSAGE";
             std::cout << " " << (entityType != -1 ? Utils::getPlayerChar(static_cast<player_types>(entityType)) : '.');
         }
-        std::cout << "\n";
+        std::cout << std::endl;
     }
 }
 

@@ -8,8 +8,9 @@
 #include "GoAI.hpp"
 #include <iostream>
 #include <thread>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <algorithm>
+#include "Utils.hpp"
 
 GoAI::GoAI() : _transpositionTable(time(NULL))
 {
@@ -40,6 +41,12 @@ for (auto &move : currentPossibleMoves) {
     }
 }*/
 
+void GoAI::makeFirstMove(Board &currentBoard, int timeoutTime)
+{
+    currentBoard.makeMove(9, 9, player_types::AI);
+    std::cout << "9,9" << std::endl;
+}
+
 void GoAI::startThinking(Board &currentBoard, int timeoutTime)
 {
     this->globalBestMove = {-1, -1};
@@ -51,7 +58,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
     for (int depth = 0; ; depth++) {
         if (depth > 0) {
             globalBestMove = currBestMove;
-            std::cout << "MESSAGE depth " << depth << " done. I will move: x:" << globalBestMove.second << " y:" << globalBestMove.first << std::endl; 
+            std::cout << "MESSAGE Finishes calculating depth " << depth << ". I will move: x:" << globalBestMove.second << " y:" << globalBestMove.first << std::endl; 
         }
         this->_currentDepth = depth;
         this->minimax(currentBoard, depth, INT_MIN, INT_MAX, true);
@@ -60,6 +67,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime)
     }
     std::cout << "MESSAGE my time is up, I am moving " << globalBestMove.second << "," << globalBestMove.first << std::endl;
     std::cout << globalBestMove.second << "," << globalBestMove.first << std::endl;
+    currentBoard.makeMove(globalBestMove.first, globalBestMove.second, player_types::AI);
 }
 
 //TODO: use the transposition table
@@ -70,7 +78,7 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
     std::chrono::duration<double> elapsed = endingTime - this->_startingTime;
     std::vector<std::pair<int, int>> moves;
 
-    if (elapsed.count() * 1000 >= this->_timeoutTime - 500) {
+    if (elapsed.count() * 1000 >= this->_timeoutTime - 100) {
         this->_shouldStopSearching = true;
         return (isMaximiser ? alpha : beta);
     }
@@ -92,6 +100,7 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
             if (evaluation > alpha) {
                 alpha = evaluation;
                 if (depth == this->_currentDepth) {
+                    std::cout << "MESSAGE updating currBestMove" << std::endl;
                     this->currBestMove = {move.first, move.second};
                 }
             }
@@ -120,9 +129,12 @@ int GoAI::returnEvaluatedBoard(Board &board)
 
     if (this->_transpositionTable.knowsHash(boardHash)) {
         std::cout << "MESSAGE " << "I know this board Hash ! " << boardHash << std::endl;
-        return this->_transpositionTable.getStoredValue(boardHash).score;
+        return this->_transpositionTable.getStoredValue(boardHash);
     }
     score = this->_evaluator.evaluateBoard(board);
-    this->_transpositionTable.storeHash(boardHash, (TranspositionValue) {score});
+    board.printToOutput();
+    std::cout << "MESSAGE score for the last printed board: " << score << std::endl; 
+    this->_transpositionTable.storeHash(boardHash, score);
+    std::cout << "MESSAGE storing hash " << boardHash << std::endl;
     return score;
 }

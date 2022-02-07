@@ -32,6 +32,11 @@ void Game::aiStartThinking()
     this->_ai.startThinking(this->_board, this->_timeout);
 }
 
+void Game::aiMakeFirstMove()
+{
+    this->_ai.makeFirstMove(this->_board, this->_timeout);
+}
+
 void Game::setTimeOut(int timeoutMs)
 {
     this->_timeout = timeoutMs;
