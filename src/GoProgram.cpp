@@ -15,13 +15,12 @@ GoProgram::GoProgram()
 {
     this->_shouldGetInput = true;
     this->_isWaitingForBoardParams = false;
-    //this->_inputThread = std::thread(&GoProgram::startInputLoop, this);
+    this->_receivedStartCommand = false;
 }
 
 GoProgram::~GoProgram()
 {
     this->_shouldGetInput = false;
-    //this->_inputThread.join();
 }
 
 //TODO: we should limit the getline command to a max length so that we can't crash because of a too long line
@@ -80,6 +79,7 @@ void GoProgram::startCmd(std::vector<std::string> &params)
         return;
     }
     this->_game.reset();
+    this->_receivedStartCommand = true;
     std::cout << "OK" << std::endl;
 }
 
@@ -98,7 +98,10 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
         std::cout << "ERROR message - you can't move here, I don't exactly know why but you can't." << std::endl;
         return;
     }
-    this->_game.aiStartThinking();
+    if (_shouldGetInput)
+        this->_game.aiStartThinking();
+    else
+        std::cout << "1,1" << std::endl;
 }
 
 void GoProgram::beginCmd(std::vector<std::string> &params)
@@ -151,6 +154,7 @@ void GoProgram::infoCmd(std::vector<std::string> &params)
 
 void GoProgram::endCmd(std::vector<std::string> &params)
 {
+    this->_receivedStartCommand = false;
     this->_shouldGetInput = false;
 }
 

@@ -25,6 +25,7 @@ private:
     bool _shouldGetInput;
     //std::thread _inputThread;
     Game _game;
+    bool _receivedStartCommand;
 
     bool _isWaitingForBoardParams;
     void parseEntry(std::string &name);

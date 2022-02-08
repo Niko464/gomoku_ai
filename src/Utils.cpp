@@ -6,8 +6,8 @@
 */
 
 #include "Utils.hpp"
-
 #include <iostream>
+
 std::vector<std::string> Utils::splitStr(const std::string &s, const std::string &del)
 {
     std::vector<std::string> to_return;

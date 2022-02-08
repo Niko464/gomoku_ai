@@ -1,39 +1,66 @@
 ##
-## EPITECH PROJECT, 2022
+## EPITECH PROJECT, 2021
 ## Gomoku
 ## File description:
 ## Makefile
 ##
 
-CFLAGS += -Iinclude -Wall -Wextra
-BINARY_NAME = pbrain-gomoku-ai
+CC            =    g++
+CXXFLAGS      = -Wall -Wextra -Iinclude
+
+NAME        =    pbrain-gomoku-ai
+
+FILES        = 		src/Board.cpp	\
+    src/Game.cpp	\
+    src/Utils.cpp	\
+    src/TranspositionTable.cpp	\
+    src/GoProgram.cpp	\
+    src/BitBoard.cpp	\
+    src/GoAI.cpp	\
+    src/BoardEvaluator.cpp
+
+SRC            =    src/main/main.cpp                \
+                $(FILES)
+
+TESTS_CRITERION =    $(FILES)                    \
+                tests/tests_patterns.cpp
+
+TESTS_GOOGLE	=	$(FILES)	\
+					tests/tests.cpp
 
 
-all: cmake
+OBJ            =    $(SRC:.cpp=.o)
 
-cmake:
-	mkdir build && cd ./build && cmake .. && ((make && mv pbrain-gomoku-ai ..) || echo 'Windows system detected')
+RM            =    rm -f
 
-tests_run:
-	@g++ -o unit_tests src/*.cpp tests/tests_patterns.cpp $(CFLAGS) -pthread -lcriterion --coverage
-	@echo "[✔️] Compiled tests"
+all: exec
+
+exec: $(OBJ)
+	@$(CC) $(CXXFLAGS) -o $(NAME) $(OBJ)
+
+tests_run: fclean
+	@$(CC) $(CXXFLAGS) -o unit_tests $(TESTS_CRITERION) --coverage -lcriterion
 	@./unit_tests
-
 
 google_tests_run:
-	@g++ -o unit_tests src/*.cpp tests/tests.cpp $(CFLAGS) -pthread -lgtest
-	@echo "✔️ Compiled tests"
-	@./unit_tests
+	@g++ -o google_tests $(TESTS_GOOGLE) $(CFLAGS) $(CXXFLAGS) -pthread -lgtest
+	@echo "✔️ Compiled Google tests"
+	@./google_tests
+
+all_tests: google_tests_run tests_run
 
 clean:
-	rm -rf build
+	@$(RM) $(OBJ)
+	@$(RM) *.gc*
+	@$(RM) tests/*.o
 
 fclean: clean
-	rm -f $(BINARY_NAME)
+	rm -f $(NAME)
 	rm -rf unit_tests
+	rm -rf google_tests
 	rm -rf *.gcno
+	rm -rf *.gcda
+	rm -rf src/*.o
 	rm -rf *.gcda
 
 re: fclean all
-
-.PHONY: all clean fclean re tests_run
