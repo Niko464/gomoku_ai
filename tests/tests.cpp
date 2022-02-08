@@ -208,14 +208,37 @@ GTEST_TEST(globalIntelligence, shouldDefendDiagonal)
     board.makeMove(8, 8, player_types::PLAYER);
     board.makeMove(9, 9, player_types::PLAYER);
 
-    board.printToOutput();
-
     testing::internal::CaptureStdout();
     ai.startThinking(board, 5000, false);
     output = testing::internal::GetCapturedStdout();
     //std::cout << "output: " << output << std::endl;
     ASSERT_NE(output, "5,3\n");
     ASSERT_NE(output, "4,3\n");
+}
+
+GTEST_TEST(globalIntelligence, shouldPreferToDefendThanAttack)
+{
+    GoAI ai;
+    Board board;
+    std::string output = "";
+
+    board.makeMove(1, 0, player_types::AI);
+    board.makeMove(1, 1, player_types::PLAYER);
+    board.makeMove(1, 2, player_types::PLAYER);
+    board.makeMove(1, 3, player_types::PLAYER);
+    board.makeMove(1, 4, player_types::PLAYER);
+
+    board.makeMove(2, 0, player_types::PLAYER);
+    board.makeMove(2, 1, player_types::AI);
+    board.makeMove(2, 2, player_types::AI);
+    board.makeMove(2, 4, player_types::AI);
+
+    board.printToOutput();
+
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 5000, false);
+    output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "6,2\n");
 }
 
 

@@ -58,10 +58,12 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
     std::vector<Vec2> moves;
     //const int boardHash = this->_transpositionTable.computeHash(board);
 
-    if (elapsed.count() * 1000 >= this->_timeoutTime - 100) {
+    if (elapsed.count() * 1000 >= this->_timeoutTime - 200) {
         this->_shouldStopSearching = true;
+        #ifdef __DEBUG__
         if (debug)
             std::cout << "MESSAGE returning here 5 alpha: " << alpha << " " << beta << std::endl;
+        #endif
         return (isMaximiser ? INT_MIN : INT_MAX);
     }
     /*if (this->_transpositionTable.knowsHash(boardHash)) {
@@ -71,14 +73,18 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
         }
     }*/
     if (isMaximiser && this->_evaluator.didPlayerWin(board, player_types::PLAYER)) {
+        #ifdef __DEBUG__
         if (debug)
             std::cout << "MESSAGE returning here" << std::endl;
-        return -100000000 - (this->_currentDepth - depth);
+        #endif
+        return -1000000000 - (this->_currentDepth - depth);
     }
     if (!isMaximiser && this->_evaluator.didPlayerWin(board, player_types::AI)) {
+        #ifdef __DEBUG__
         if (debug)
             std::cout << "MESSAGE returning here 2" << std::endl;
-        return 100000000 - (this->_currentDepth - depth);
+        #endif
+        return 1000000000 - (this->_currentDepth - depth);
     }
     if (depth == 0) {
         int to_return = this->_evaluator.evaluateBoard(board);
@@ -87,26 +93,32 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
     }
     moves = board.getValidMoves(3);
     if (moves.size() == 0) {
+        #ifdef __DEBUG__
         if (debug)
             std::cout << "MESSAGE returning here 4" << std::endl;
+        #endif
         return this->_evaluator.evaluateBoard(board);
     }
-    
+    #ifdef __DEBUG__
     if (debug) {
         std::cout << "MESSAGE \nMESSAGE \nMESSAGE \nMESSAGE " << std::endl;
         std::cout << "MESSAGE Checking positions for the following board :       maximiser: " << isMaximiser << std::endl;
         board.printToOutput();
         std::cout << "MESSAGE \nMESSAGE \nMESSAGE \nMESSAGE " << std::endl;
     }
+    #endif
     if (isMaximiser) {
         for (Vec2 &move : moves) {
             board.makeMove(move.y, move.x, player_types::AI);
+            #ifdef __DEBUG__
             if (debug)
                 std::cout << "MESSAGE move y:" << move.y << " " << move.x << std::endl;
+            #endif
             int evaluation = this->minimax(board, depth - 1, alpha, beta, false, debug);
             board.unmakeMove(move.y, move.x, player_types::AI);
             if (evaluation > alpha) {
                 alpha = evaluation;
+                #ifdef __DEBUG__
                 if (debug) {
                     std::cout << "MESSAGE alpha: " << alpha << " beta: " << beta << " move: y:" << move.y << " " << move.x << std::endl;
                     board.makeMove(move.y, move.x, player_types::AI);
@@ -114,7 +126,9 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
                     board.unmakeMove(move.y, move.x, player_types::AI);
                     std::cout << "MESSAGE end alpha" << std::endl;
                 }
+                #endif
                 if (depth == this->_currentDepth) {
+                    #ifdef __DEBUG__
                     if (debug) {
                         std::cout << "MESSAGE updating currBestMove to y" << move.y << " x" << move.x << " " << evaluation << std::endl;
                         board.makeMove(move.y, move.x, player_types::AI);
@@ -122,6 +136,7 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
                         board.unmakeMove(move.y, move.x, player_types::AI);
                         std::cout << "MESSAGE end update currBestMove" << std::endl;
                     }
+                    #endif
                     this->currBestMove = move;
                 }
             }
