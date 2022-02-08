@@ -56,57 +56,87 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
     auto endingTime = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = endingTime - this->_startingTime;
     std::vector<Vec2> moves;
-    const int boardHash = this->_transpositionTable.computeHash(board);
+    //const int boardHash = this->_transpositionTable.computeHash(board);
 
     if (elapsed.count() * 1000 >= this->_timeoutTime - 100) {
         this->_shouldStopSearching = true;
-        return (isMaximiser ? alpha : beta);
+        if (debug)
+            std::cout << "MESSAGE returning here 5 alpha: " << alpha << " " << beta << std::endl;
+        return (isMaximiser ? INT_MIN : INT_MAX);
     }
-    if (this->_transpositionTable.knowsHash(boardHash)) {
+    /*if (this->_transpositionTable.knowsHash(boardHash)) {
         TranspositionValue &storedInfo = this->_transpositionTable.getStoredValue(boardHash);
         if (storedInfo.depth >= depth) {
             
         }
-    }
+    }*/
     if (isMaximiser && this->_evaluator.didPlayerWin(board, player_types::PLAYER)) {
+        if (debug)
+            std::cout << "MESSAGE returning here" << std::endl;
         return -100000000 - (this->_currentDepth - depth);
     }
     if (!isMaximiser && this->_evaluator.didPlayerWin(board, player_types::AI)) {
+        if (debug)
+            std::cout << "MESSAGE returning here 2" << std::endl;
         return 100000000 - (this->_currentDepth - depth);
     }
-    if (depth == 0)
-        return this->_evaluator.evaluateBoard(board);
+    if (depth == 0) {
+        int to_return = this->_evaluator.evaluateBoard(board);
+        //std::cout << "returning here 3 " << to_return << std::endl;
+        return to_return;
+    }
     moves = board.getValidMoves(3);
-    if (moves.size() == 0)
+    if (moves.size() == 0) {
+        if (debug)
+            std::cout << "MESSAGE returning here 4" << std::endl;
         return this->_evaluator.evaluateBoard(board);
+    }
     
+    if (debug) {
+        std::cout << "MESSAGE \nMESSAGE \nMESSAGE \nMESSAGE " << std::endl;
+        std::cout << "MESSAGE Checking positions for the following board :       maximiser: " << isMaximiser << std::endl;
+        board.printToOutput();
+        std::cout << "MESSAGE \nMESSAGE \nMESSAGE \nMESSAGE " << std::endl;
+    }
     if (isMaximiser) {
-        //we're trying to maximize this
         for (Vec2 &move : moves) {
             board.makeMove(move.y, move.x, player_types::AI);
+            if (debug)
+                std::cout << "MESSAGE move y:" << move.y << " " << move.x << std::endl;
             int evaluation = this->minimax(board, depth - 1, alpha, beta, false, debug);
             board.unmakeMove(move.y, move.x, player_types::AI);
             if (evaluation > alpha) {
                 alpha = evaluation;
+                if (debug) {
+                    std::cout << "MESSAGE alpha: " << alpha << " beta: " << beta << " move: y:" << move.y << " " << move.x << std::endl;
+                    board.makeMove(move.y, move.x, player_types::AI);
+                    board.printToOutput();
+                    board.unmakeMove(move.y, move.x, player_types::AI);
+                    std::cout << "MESSAGE end alpha" << std::endl;
+                }
                 if (depth == this->_currentDepth) {
-                    if (debug)
+                    if (debug) {
                         std::cout << "MESSAGE updating currBestMove to y" << move.y << " x" << move.x << " " << evaluation << std::endl;
+                        board.makeMove(move.y, move.x, player_types::AI);
+                        board.printToOutput();
+                        board.unmakeMove(move.y, move.x, player_types::AI);
+                        std::cout << "MESSAGE end update currBestMove" << std::endl;
+                    }
                     this->currBestMove = move;
                 }
             }
             //prune the next branches
-            if (alpha >= beta)
+            if (alpha >= beta || this->_shouldStopSearching)
                 break;
         }
         return alpha;
     }
-    // trying to minimize this
-    for (auto &move : moves) {
+    for (Vec2 &move : moves) {
         board.makeMove(move.y, move.x, player_types::PLAYER);
         int evaluation = this->minimax(board, depth - 1, alpha, beta, true, debug);
         board.unmakeMove(move.y, move.x, player_types::PLAYER);
         beta = std::min(evaluation, beta);
-        if (alpha >= beta)
+        if (alpha >= beta || this->_shouldStopSearching)
             break;
     }
     return beta;

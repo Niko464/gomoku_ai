@@ -164,7 +164,7 @@ GTEST_TEST(globalIntelligence, testOne)
     testing::internal::CaptureStdout();
     ai.startThinking(board, 1000, false);
     output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "3,9\n");
+    ASSERT_EQ(output, "4,10\n");
 
     board.reset();
 
@@ -176,7 +176,7 @@ GTEST_TEST(globalIntelligence, testOne)
     testing::internal::CaptureStdout();
     ai.startThinking(board, 1000, false);
     output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "4,4\n");
+    ASSERT_EQ(output, "5,5\n");
 }
 
 GTEST_TEST(globalIntelligence, basicDefenseDiagonal)
@@ -192,7 +192,7 @@ GTEST_TEST(globalIntelligence, basicDefenseDiagonal)
     testing::internal::CaptureStdout();
     ai.startThinking(board, 3000, false);
     output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "5,5\n");
+    ASSERT_EQ(output, "6,6\n");
 }
 
 GTEST_TEST(globalIntelligence, shouldDefendDiagonal)
@@ -213,9 +213,9 @@ GTEST_TEST(globalIntelligence, shouldDefendDiagonal)
     testing::internal::CaptureStdout();
     ai.startThinking(board, 5000, false);
     output = testing::internal::GetCapturedStdout();
-    std::cout << "output: " << output << std::endl;
-    ASSERT_NE(output, "4,2\n");
-    ASSERT_NE(output, "3,2\n");
+    //std::cout << "output: " << output << std::endl;
+    ASSERT_NE(output, "5,3\n");
+    ASSERT_NE(output, "4,3\n");
 }
 
 
