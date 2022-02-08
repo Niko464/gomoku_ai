@@ -154,22 +154,68 @@ GTEST_TEST(globalIntelligence, testOne)
 {
     GoAI ai;
     Board board;
+    std::string output;
 
-    /*board.makeMove(9, 4, player_types::PLAYER);
+    board.makeMove(9, 4, player_types::PLAYER);
     board.makeMove(9, 5, player_types::PLAYER);
     board.makeMove(9, 6, player_types::PLAYER);
     board.makeMove(9, 7, player_types::PLAYER);
 
-    ai.startThinking(board, 5000, false);
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 1000, false);
+    output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "3,9\n");
 
-    board.reset();*/
+    board.reset();
 
     board.makeMove(0, 0, player_types::AI);
     board.makeMove(1, 1, player_types::AI);
     board.makeMove(2, 2, player_types::AI);
     board.makeMove(3, 3, player_types::AI);
 
-    ai.startThinking(board, 5000, true);
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 1000, false);
+    output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "4,4\n");
+}
+
+GTEST_TEST(globalIntelligence, basicDefenseDiagonal)
+{
+    GoAI ai;
+    Board board;
+    std::string output = "";
+
+    board.makeMove(6, 6, player_types::PLAYER);
+    board.makeMove(7, 7, player_types::PLAYER);
+    board.makeMove(8, 8, player_types::PLAYER);
+
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 3000, false);
+    output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "5,5\n");
+}
+
+GTEST_TEST(globalIntelligence, shouldDefendDiagonal)
+{
+    GoAI ai;
+    Board board;
+    std::string output = "";
+
+    board.makeMove(2, 2, player_types::AI);
+    board.makeMove(2, 5, player_types::AI);
+
+    board.makeMove(7, 7, player_types::PLAYER);
+    board.makeMove(8, 8, player_types::PLAYER);
+    board.makeMove(9, 9, player_types::PLAYER);
+
+    board.printToOutput();
+
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 5000, false);
+    output = testing::internal::GetCapturedStdout();
+    std::cout << "output: " << output << std::endl;
+    ASSERT_NE(output, "4,2\n");
+    ASSERT_NE(output, "3,2\n");
 }
 
 
