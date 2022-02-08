@@ -94,7 +94,7 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
         std::cout << "ERROR message - those aren't ints as params" << std::endl;
         return;
     }
-    if (this->_game.makeMove(player_types::PLAYER, std::stoi(splitted[1]), std::stoi(splitted[0])) == false) {
+    if (this->_game.makeMove(player_types::PLAYER, std::stoi(splitted[1]) - 1, std::stoi(splitted[0]) - 1) == false) {
         std::cout << "ERROR message - you can't move here, I don't exactly know why but you can't." << std::endl;
         return;
     }

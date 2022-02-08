@@ -22,7 +22,7 @@ GoAI::~GoAI() {}
 
 void GoAI::makeFirstMove(Board &currentBoard, int timeoutTime)
 {
-    currentBoard.makeMove(9, 9, player_types::AI);
+    currentBoard.makeMove(8, 8, player_types::AI);
     std::cout << "9,9" << std::endl;
 }
 
@@ -34,8 +34,8 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime, bool debug)
     this->_shouldStopSearching = false;
     this->_timeoutTime = timeoutTime;
     //Iterative Deepening infinite loop
-    //TODO: make the "2" "400"
-    for (int depth = 1; depth <= 2; depth++) {
+
+    for (int depth = 1; depth <= 400; depth++) {
         this->_currentDepth = depth;
         this->minimax(currentBoard, depth, INT_MIN, INT_MAX, true, debug);
         if (this->_shouldStopSearching)
@@ -46,7 +46,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime, bool debug)
     }
     if (debug)
         std::cout << "MESSAGE my time is up, I am moving y" << globalBestMove.y << ",x" << globalBestMove.x << std::endl;
-    std::cout << globalBestMove.y << "," << globalBestMove.x << std::endl;
+    std::cout << globalBestMove.x + 1 << "," << globalBestMove.y + 1 << std::endl;
     currentBoard.makeMove(globalBestMove.y, globalBestMove.x, player_types::AI);
 }
 
