@@ -11,6 +11,27 @@
 #include "BoardEvaluator.hpp"
 #include "Utils.hpp"
 #include "GoAI.hpp"
+#include <chrono>
+
+/*GTEST_TEST(aiSpeed, Speed)
+{
+    GoAI ai;
+    Board board;
+    std::string output = "";
+    int depth = 3;
+
+    board.makeMove(7, 7, player_types::PLAYER);
+
+    auto start = std::chrono::system_clock::now();
+    testing::internal::CaptureStdout();
+    ai.startThinking(board, 500000, false, depth);
+    output = testing::internal::GetCapturedStdout();
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    std::cout << output << std::endl;
+    ai.printStats();
+    std::cout << "MESSAGE Time it took for " << depth << " depths: " << elapsed.count() << "s" << std::endl;
+}*/
 
 GTEST_TEST(BoardTests, canMakeMoveAndUnmake)
 {

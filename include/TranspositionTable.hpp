@@ -13,10 +13,17 @@
 #include <unordered_map>
 #include "Vec2.hpp"
 
+enum TranspositionType {
+    EXACT,
+    UPPER,
+    LOWER
+};
+
 struct TranspositionValue {
-    int score;
+    int value;
     int depth;
     Vec2 bestMove;
+    TranspositionType type;
 };
 
 //TODO: think if the computeHash needs the player turn ????
