@@ -98,7 +98,7 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
         std::cout << "ERROR message - you can't move here, I don't exactly know why but you can't." << std::endl;
         return;
     }
-    if (_shouldGetInput)
+    if (this->_receivedStartCommand)
         this->_game.aiStartThinking();
     else
         std::cout << "1,1" << std::endl;
