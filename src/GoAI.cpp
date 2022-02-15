@@ -51,7 +51,7 @@ void GoAI::printStats()
 
 void GoAI::startThinking(Board &currentBoard, int timeoutTime, bool debug, int maxDepth)
 {
-    this->globalBestMove = {-1, -1};
+    this->globalBestMove = this->getRandomValidMove(currentBoard);
     this->currBestMove = {-1, -1};
     this->_startingTime = std::chrono::system_clock::now();
     this->_shouldStopSearching = false;
@@ -241,6 +241,18 @@ int GoAI::minimax(Board &board, int depth, int alpha, int beta, bool isMaximiser
 std::vector<Vec2> &GoAI::sortMoves(std::vector<Vec2> &moves, Vec2 &bestMove)
 {
     return moves;
+}
+
+Vec2 GoAI::getRandomValidMove(Board &currentBoard)
+{
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 20; x++) {
+            if (currentBoard.canMakeMove(y, x)) {
+                return {y, x};
+            }
+        }
+    }
+    return {0, 0};
 }
 
 /*int GoAI::returnEvaluatedBoard(Board &board, bool debug)
