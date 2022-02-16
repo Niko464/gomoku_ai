@@ -26,7 +26,7 @@ GoAI::~GoAI() {}
 void GoAI::makeFirstMove(Board &currentBoard, int timeoutTime)
 {
     currentBoard.makeMove(8, 8, player_types::AI);
-    std::cout << "9,9" << std::endl;
+    std::cout << "8,8" << std::endl;
 }
 
 void GoAI::_resetStats()
