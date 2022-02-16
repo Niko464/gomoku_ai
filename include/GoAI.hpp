@@ -47,6 +47,7 @@ private:
     Vec2 globalBestMove;
     Vec2 currBestMove;
 
+    Vec2 getRandomValidMove(Board &currentBoard);
     void _resetStats();
 };
 

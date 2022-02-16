@@ -198,7 +198,6 @@ Test(globalIntelligence, testOne)
     board.makeMove(9, 7, player_types::PLAYER);
 
     ai.startThinking(board, 1000, false);
-
     board.reset();
 
     board.makeMove(0, 0, player_types::AI);
@@ -206,7 +205,8 @@ Test(globalIntelligence, testOne)
     board.makeMove(2, 2, player_types::AI);
     board.makeMove(3, 3, player_types::AI);
     ai.startThinking(board, 1000, false);
-    cr_assert_stdout_eq_str("4,10\n5,5\n");
+
+    cr_assert_stdout_eq_str("3,9\n4,4\n");
 }
 
 
@@ -222,7 +222,7 @@ Test(globalIntelligence, basicDefenseDiagonal)
     board.makeMove(8, 8, player_types::PLAYER);
 
     ai.startThinking(board, 3000, false);
-    cr_assert_stdout_eq_str("6,6\n");
+    cr_assert_stdout_eq_str("5,5\n");
 }
 
 /*
@@ -244,8 +244,8 @@ GTEST_TEST(globalIntelligence, shouldDefendDiagonal)
     ai.startThinking(board, 5000, false);
     output = testing::internal::GetCapturedStdout();
     //std::cout << "output: " << output << std::endl;
-    ASSERT_NE(output, "5,3\n");
-    ASSERT_NE(output, "4,3\n");
+    ASSERT_NE(output, "4,2\n");
+    ASSERT_NE(output, "3,2\n");
 }
 */
 
@@ -273,7 +273,7 @@ Test(globalIntelligence, shouldPreferToDefendThanAttack)
   //  testing::internal::CaptureStdout();
     ai.startThinking(board, 5000, false);
     //output = testing::internal::GetCapturedStdout();
-    cr_assert_stdout_eq_str("6,2\n");
+    cr_assert_stdout_eq_str("5,1\n");
 }
 
 /*
