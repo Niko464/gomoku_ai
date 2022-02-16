@@ -100,7 +100,7 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
         std::cout << "ERROR message - you can't place there." << std::endl;
         return; 
     }
-    if (this->_game.makeMove(player_types::PLAYER, y - 1, x - 1) == false) {
+    if (this->_game.makeMove(player_types::PLAYER, y, x) == false) {
         std::cout << "ERROR message - you can't move here, I don't exactly know why but you can't." << std::endl;
         return;
     }
