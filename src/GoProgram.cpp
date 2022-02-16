@@ -96,7 +96,7 @@ void GoProgram::turnCmd(std::vector<std::string> &params)
     }
     int y = std::stoi(splitted[1]);
     int x = std::stoi(splitted[0]);
-    if (y <= 0 || y >= 20 || x <= 0 || x >= 20) {
+    if (y < 0 || y >= 20 || x < 0 || x >= 20) {
         std::cout << "ERROR message - you can't place there." << std::endl;
         return; 
     }

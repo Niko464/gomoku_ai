@@ -69,7 +69,7 @@ void GoAI::startThinking(Board &currentBoard, int timeoutTime, bool debug, int m
             this->printStats();
         }
     }
-    std::cout << globalBestMove.x + 1 << "," << globalBestMove.y + 1 << std::endl;
+    std::cout << globalBestMove.x << "," << globalBestMove.y << std::endl;
     currentBoard.makeMove(globalBestMove.y, globalBestMove.x, player_types::AI);
 }
 
