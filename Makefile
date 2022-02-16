@@ -23,7 +23,7 @@ SRC            =    src/main/main.cpp                \
                 $(FILES)
 
 TESTS_CRITERION =    $(FILES)                    \
-                tests/tests_patterns.cpp
+                tests/tests.cpp
 
 TESTS_GOOGLE	=	$(FILES)	\
 					tests/tests.cpp
